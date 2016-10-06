@@ -1,0 +1,81 @@
+@CHARSET "UTF-8";
+
+.inputHora{
+    width:70px;	
+}
+.systemBody{
+    background:#939598;
+}
+.botonFp{
+      background: #1E7D3E !important ;
+ }
+.botonFp :hover{
+      background: #459e00 ;
+ }
+ .inputInvalid {
+   border: 2px solid red;
+}
+
+.evento1 .fc-event,
+.evento1 a,
+.evento1 .fc-event-inner{
+    background-color: white;
+    border-color: gray;
+    color: #777777;
+    font-size:14px;
+    font-weight:bold;
+}
+.evento2 .fc-event,
+.evento2 a,
+.evento2 .fc-event-inner{
+    background-color: white;
+    border-color: gray;
+    color: red;
+    font-size:14px;
+    font-weight:bold;
+}
+.evento3 .fc-event,
+.evento3 a,
+.evento3 .fc-event-inner{
+    background-color: gray;
+    border-color: gray;
+    color: white;
+    font-size:14px;
+    font-weight:bold;
+}
+.evento4 .fc-event,
+.evento4 a,
+.evento4 .fc-event-inner{
+    background-color: white;
+    border-color: white;
+    color: black;
+    font-size:14px;
+    font-weight:bold;
+}
+
+
+
+.descripcion
+{
+    text-align:left;
+    width:800px;
+}
+
+.grilla td { vertical-align:top !important;  }
+.iconInfo{
+  margin-left:5px;
+}
+.horizontal { 
+    display: inline;
+    float : left;
+    width: 20px;
+    padding: 0px 0px;
+}
+
+.tblresultados table{
+    width:3500px !important;
+}
+
+.btnRojo{
+    background: red;
+}

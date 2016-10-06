@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/template/base.xhtml">
+            <ui:define name="content">
+                <h:form id="cliente-form">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+
+                    <p:dataTable id="dtCliente" var="cliente" value="#{clientesBean.listaClientes}"
+                                 rows="10" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 selection="#{clientesBean.cliente}" rowKey="#{cliente}"
+                                 selectionMode="single">
+
+                        <p:ajax event="rowSelect" listener="#{clientesBean.onRowSelect}" />
+
+                        <p:column headerText="ID" sortBy="#{cliente.clienteId}">
+                            <h:outputText value="#{cliente.clienteId}" />
+                        </p:column>
+                        <p:column headerText="Nombre" sortBy="#{cliente.nombreCliente}">
+                            <h:outputText value="#{cliente.nombreCliente}" />
+                        </p:column>                        
+                        <f:facet name="footer">
+                            <p:commandButton process="dtCliente" icon="ui-icon-document" update=":form-add:clienteGr" 
+                                             value="Agregar" oncomplete="PF('dlgUsuAdd').show()" actionListener="#{clientesBean.actionClean}"/>
+                            <p:commandButton process="dtCliente" icon="ui-icon-pencil"
+                                             value="Editar" oncomplete="PF('dlgUsuAdd').show()"
+                                             update=":form-add:clienteGr" 
+                                             disabled="#{clientesBean.bloquearBotones}"/>
+
+                            <p:confirmDialog global="true" showEffect="fade"
+                                             hideEffect="explode">
+                                <p:commandButton value="Si" type="button"
+                                                 styleClass="ui-confirmdialog-yes" icon="ui-icon-check" ajax="false" />
+                                <p:commandButton value="No" type="button"
+                                                 styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+
+                <p:dialog header="Usuario" widgetVar="dlgUsuAdd"
+                          modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form id="form-add">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" />
+                        <p:panelGrid columns="2" columnClasses="column" id="clienteGr">                            
+                            <p:outputLabel value="Cliente" for="cliente" />
+                            <h:panelGroup>
+                                <p:inputText id="cliente" required="true"
+                                             value="#{clientesBean.cliente.nombreCliente}" />
+                                <h:inputHidden value="#{clientesBean.cliente.clienteId}" />
+
+                            </h:panelGroup>
+                            
+                            <p:commandButton 
+                                value="Guardar" 
+                                update="clienteGr,:cliente-form:dtCliente" 
+                                action="#{clientesBean.add}"
+                                />
+
+                        </p:panelGrid>
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+
+        </ui:composition>
+
+    </h:body>
+</html>
