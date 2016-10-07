@@ -67,9 +67,9 @@ public class Clientes implements Serializable {
     @Column(name = "contacto")
     private String contacto;
     @Column(name = "latitud")
-    private BigInteger latitud;
+    private double latitud;
     @Column(name = "longitud")
-    private BigInteger longitud;
+    private double longitud;
 
     public Clientes() {
     }
@@ -133,22 +133,23 @@ public class Clientes implements Serializable {
         this.contacto = contacto;
     }
 
-    public BigInteger getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(BigInteger latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
-    public BigInteger getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(BigInteger longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
+  
     @Override
     public int hashCode() {
         int hash = 0;

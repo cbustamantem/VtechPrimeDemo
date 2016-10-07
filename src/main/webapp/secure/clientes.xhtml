@@ -3,10 +3,24 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" >
     <h:body>
         <ui:composition template="/template/base.xhtml">
             <ui:define name="content">
+                <script type="text/javascript">
+                    function geocode() {
+                        PF('geoMap').geocode(document.getElementById('form-mapa:address').value);
+                    }
+
+                    function reverseGeocode() {
+                        var lat = document.getElementById('lat').value,
+                                lng = document.getElementById('lng').value;
+
+                        PF('revGeoMap').reverseGeocode(lat, lng);
+                    }
+
+                </script>
+
                 <h:form id="cliente-form">
                     <p:growl id="growl" showDetail="true" sticky="true" />
 
@@ -22,8 +36,8 @@
                         <p:column headerText="ID" sortBy="#{cliente.clienteId}">
                             <h:outputText value="#{cliente.clienteId}" />
                         </p:column>
-                        <p:column headerText="Nombre" sortBy="#{cliente.nombreCliente}">
-                            <h:outputText value="#{cliente.nombreCliente}" />
+                        <p:column headerText="Razon Social" sortBy="#{cliente.razonSocial}">
+                            <h:outputText value="#{cliente.razonSocial}" />
                         </p:column>                        
                         <f:facet name="footer">
                             <p:commandButton process="dtCliente" icon="ui-icon-document" update=":form-add:clienteGr" 
@@ -45,19 +59,42 @@
                     </p:dataTable>
                 </h:form>
 
-                <p:dialog header="Usuario" widgetVar="dlgUsuAdd"
-                          modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog header="Registro de Clientes" class="elegantFonts" widgetVar="dlgUsuAdd"
+                          modal="true" showEffect="fade" hideEffect="fade"  resizable="false">
                     <h:form id="form-add">
                         <p:messages id="messages" showDetail="true" autoUpdate="true" />
-                        <p:panelGrid columns="2" columnClasses="column" id="clienteGr">                            
-                            <p:outputLabel value="Cliente" for="cliente" />
+                        <p:panelGrid columns="2" columnClasses="column" id="clienteGr"> 
+                            <p:outputLabel value="Razon Social" for="tbRazonSocial" />
                             <h:panelGroup>
-                                <p:inputText id="cliente" required="true"
-                                             value="#{clientesBean.cliente.nombreCliente}" />
+                                <p:inputText id="tbRazonSocial" required="true"
+                                             value="#{clientesBean.cliente.razonSocial}" />
                                 <h:inputHidden value="#{clientesBean.cliente.clienteId}" />
+                            </h:panelGroup>
+                            <p:outputLabel value="Teléfono" for="tbTelefono" />
+                            <p:inputText id="tbTelefono" required="true"
+                                         value="#{clientesBean.cliente.telefono}" />
+                            <p:outputLabel value="Contacto" for="tbContacto" />
+                            <p:inputText id="tbContacto" required="true"
+                                         value="#{clientesBean.cliente.contacto}" />
+
+
+                            <p:outputLabel value="Logo URL" for="tbLogo" />
+                            <p:inputText id="tbLogo" required="true"
+                                         value="#{clientesBean.cliente.logoUrl}" />
+                            <p:outputLabel value="Ubicación" for="tbContacto" />
+                            <h:panelGroup>
+                                <p:outputLabel value="Latitud: #{clientesBean.cliente.latitud}"/>
+                                <p:outputLabel value="Longitud: #{clientesBean.cliente.longitud}"/>
+                                <p:commandButton 
+                                    value=" Ubicar" 
+                                    update="clienteGr,:cliente-form:dtCliente" 
+                                    onclick="PF('dlgclientMap').show()"
+                                    icon="fa fa-map-marker"
+                                    />
 
                             </h:panelGroup>
-                            
+
+
                             <p:commandButton 
                                 value="Guardar" 
                                 update="clienteGr,:cliente-form:dtCliente" 
@@ -65,9 +102,22 @@
                                 />
 
                         </p:panelGrid>
+
                     </h:form>
                 </p:dialog>
 
+                <p:dialog header="Ubicacion de clientes" class="elegantFonts" widgetVar="dlgclientMap"
+                          modal="true" showEffect="fade" hideEffect="fade"  resizable="false" style=" width:560vh;height:385vh; ">
+
+                    <p:gmap id="geoGmap" widgetVar="geoMa\p"  center="#{clientesBean.centerGeoMap}" 
+                            zoom="#{clientesBean.zoom}" model="#{clientesBean.geoModel}"  
+                            type="ROADMAP" style=" width:360vh !important;height:60vh" >
+                        <p:ajax event="geocode" listener="#{clientesBean.onGeocode}" update="@this" />
+                        <p:ajax event="stateChange" listener="#{clientesBean.onStateChange}" update="" />
+                        <p:ajax event="pointSelect" listener="#{clientesBean.onPointSelect}" update="@this" />
+
+                    </p:gmap>
+                </p:dialog>
             </ui:define>
 
 

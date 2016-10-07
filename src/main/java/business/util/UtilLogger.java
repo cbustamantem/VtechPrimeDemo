@@ -36,9 +36,9 @@ public class UtilLogger {
          if (!configured) {
             init();
         }
-         if (null !=Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName()))
-            return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());  
-         else
+//         if (null !=Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName()))
+//            return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());  
+//         else
           return logger;
     }  
     

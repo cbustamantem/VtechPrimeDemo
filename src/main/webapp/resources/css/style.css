@@ -55,7 +55,7 @@ ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfie
     background-color: white;
     border-color: gray;
     color: #777777;
-    font-size:14px;
+    font-size:10px;
     font-weight:bold;
 }
 .evento2 .fc-event,
@@ -64,7 +64,7 @@ ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfie
     background-color: white;
     border-color: gray;
     color: red;
-    font-size:14px;
+    font-size:10px;
     font-weight:bold;
 }
 .evento3 .fc-event,
@@ -73,7 +73,7 @@ ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfie
     background-color: gray;
     border-color: gray;
     color: white;
-    font-size:14px;
+    font-size:10px;
     font-weight:bold;
 }
 .evento4 .fc-event,
@@ -82,7 +82,7 @@ ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfie
     background-color: white;
     border-color: white;
     color: black;
-    font-size:14px;
+    font-size:10px;
     font-weight:bold;
 }
 .ui-selectonemenu-label{
