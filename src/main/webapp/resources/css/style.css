@@ -186,4 +186,32 @@ clip-path:ellipse(radius-x, radius-y at x, y)
     font-family: 'Lobster', cursive;
     color:#1E7D3E;
 }
-
+.ui-column-title {
+    font-size: 12px;
+}
+.ui-button-text{
+    font-size: 14px;
+}
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 100%;
+}
+.logoText1
+{
+    font-size: 28px;font-family: 'Lobster', cursive;color:#777777;
+}
+.logoText2
+{
+    font-size: 28px;font-family: 'Lobster', cursive;color:#939598;
+}
+.logoContainer
+{
+    width:100%;display:block;vertical-align: central; margin-top: 20px;
+}
+.logoContainer2
+{
+    position:absolute; margin-top:70px;margin-left:33%;height:150px;width:403px; display:block;
+}
+.loginTitle
+{
+    width:300px;padding-left:10px;font-family: 'lobster'; font-weight: lighter;
+}

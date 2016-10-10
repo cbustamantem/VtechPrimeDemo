@@ -41,9 +41,9 @@
                         </p:column>                        
                         <f:facet name="footer">
                             <p:commandButton process="dtCliente" icon="ui-icon-document" update=":form-add:clienteGr" 
-                                             value="Agregar" oncomplete="PF('dlgUsuAdd').show()" actionListener="#{clientesBean.actionClean}"/>
+                                             value="Agregar" oncomplete="PF('dlgCliAdd').show()" actionListener="#{clientesBean.actionClean}"/>
                             <p:commandButton process="dtCliente" icon="ui-icon-pencil"
-                                             value="Editar" oncomplete="PF('dlgUsuAdd').show()"
+                                             value="Editar" oncomplete="PF('dlgCliAdd').show()"
                                              update=":form-add:clienteGr" 
                                              disabled="#{clientesBean.bloquearBotones}"/>
 
@@ -58,8 +58,8 @@
                         </f:facet>
                     </p:dataTable>
                 </h:form>
-
-                <p:dialog header="Registro de Clientes" class="elegantFonts" widgetVar="dlgUsuAdd"
+                <!-- Dialogo de registro de clientes -->
+                <p:dialog header="Registro de Clientes" class="elegantFonts" id="dlgCliAdd" widgetVar="dlgCliAdd"
                           modal="true" showEffect="fade" hideEffect="fade"  resizable="false">
                     <h:form id="form-add">
                         <p:messages id="messages" showDetail="true" autoUpdate="true" />
@@ -98,23 +98,23 @@
                             <p:commandButton 
                                 value="Guardar" 
                                 update="clienteGr,:cliente-form:dtCliente" 
-                                action="#{clientesBean.add}"
+                                action="#{clientesBean.registrarCliente}"
                                 />
 
                         </p:panelGrid>
 
                     </h:form>
                 </p:dialog>
-
+                <!-- Dialogo selector de ubicación de clientes -->
                 <p:dialog header="Ubicacion de clientes" class="elegantFonts" widgetVar="dlgclientMap"
-                          modal="true" showEffect="fade" hideEffect="fade"  resizable="false" style=" width:560vh;height:385vh; ">
+                          modal="true" showEffect="fade" hideEffect="fade"  resizable="true" style=" width:560px;height:285vh; " closable="true">
 
-                    <p:gmap id="geoGmap" widgetVar="geoMa\p"  center="#{clientesBean.centerGeoMap}" 
-                            zoom="#{clientesBean.zoom}" model="#{clientesBean.geoModel}"  
-                            type="ROADMAP" style=" width:360vh !important;height:60vh" >
-                        <p:ajax event="geocode" listener="#{clientesBean.onGeocode}" update="@this" />
-                        <p:ajax event="stateChange" listener="#{clientesBean.onStateChange}" update="" />
-                        <p:ajax event="pointSelect" listener="#{clientesBean.onPointSelect}" update="@this" />
+                    <p:gmap id="geoGmap" widgetVar="geoMa\p"  center="#{mapaClientesBean.centerGeoMap}" 
+                            zoom="#{mapaClientesBean.zoom}" model="#{mapaClientesBean.geoModel}"  
+                            type="ROADMAP" style=" width:560px !important;height:60vh" >
+                        <p:ajax event="geocode" listener="#{mapaClientesBean.onGeocode}" update="@this" />
+                        <p:ajax event="stateChange" listener="#{mapaClientesBean.onStateChange}" update="" />
+                        <p:ajax event="pointSelect" listener="#{mapaClientesBean.onPointSelect}" update="@this" />
 
                     </p:gmap>
                 </p:dialog>

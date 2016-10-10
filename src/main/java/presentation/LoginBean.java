@@ -87,11 +87,8 @@ public class LoginBean implements Serializable {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-        if (null != usuario) {
-            loggedIn = true;
-        } else {
-            loggedIn = false;
-        }
+        loggedIn = null != usuario ;
+        
         sessionMap.put("loggedIn", loggedIn);
 
         if (loggedIn) {

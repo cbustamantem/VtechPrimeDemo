@@ -6,7 +6,6 @@
 package business.clientes.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,12 +50,10 @@ public class Clientes implements Serializable {
     @Column(name = "razon_social")
     private String razonSocial;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "telefono")
     private String telefono;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "direccion")
     private String direccion;

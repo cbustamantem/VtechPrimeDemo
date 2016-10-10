@@ -12,7 +12,7 @@
         <script src="http://maps.google.com/maps/api/js?key=AIzaSyCEgIBTE333_kGDmqlnOvve6u86oEGL-ko" type="text/javascript"></script>       
     </h:head>
     <h:body styleClass="systemBody2">
-
+        <div class="ui-fluid"></div>
          <div style="position:absolute; margin-top:10px;margin-left:2%;height:100px;width:403px; display:block; ">
                 <div style="display:inline;float:left;"><img id="gear" src="../resources/images/logo.svg" style="width:60px;margin-right: 20px;" /></div>
                 <div style='width:100%;display:block;vertical-align: central; margin-top: 0px;'>
@@ -21,15 +21,13 @@
                 </div>
             </div>
         
-
-        <div style="position:absolute;padding-top:10px;margin-top:10px;left:120px;height:100px;width:150px;background: URL(../resources/images/logo_small.png) no-repeat;">&nbsp;</div>
         <div style="left:0px; height:90px;">&nbsp;</div>
         <h:form id="base">
             <p:growl id="messages" />
             <p:menubar >
                 <p:menuitem value="Inicio" action="home" icon="ui-icon-home" class="elegantFonts"/>
                 <p:submenu label="Clientes" icon="ui-icon-document" class="elegantFonts">
-                    <p:menuitem value="Gestionar Clientes" action="clientes" icon="ui-icon-disk"  class="elegantFonts"/>
+                    <p:menuitem value="Gestionar Clientes" action="clientes" icon="ui-icon-disk"  class="elegantFonts" ajax="false"/>
                 </p:submenu>
 
 
