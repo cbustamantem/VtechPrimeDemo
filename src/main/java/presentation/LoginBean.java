@@ -50,6 +50,8 @@ public class LoginBean implements Serializable {
     private void init() {
         logger.info("Inicio de LoginBean");
         usuario = new Usuarios();
+        username="invitado";
+        password="invitado";
     }
 
     /**
