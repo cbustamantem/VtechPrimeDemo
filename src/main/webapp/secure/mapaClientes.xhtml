@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:body>
+        <ui:composition template="/template/base.xhtml">
+            <ui:define name="content" >
+                <div style="background:#ffffff;padding: 20px;">
+
+                    <h:outputLabel value="Reporte de Clientes " class="elegantFonts"></h:outputLabel>
+
+                    <h:form>  
+                        <p:gmap id="gmap" center="#{clientesMapBean.centerGeoMap}" zoom="13" type="ROADMAP" model="#{clientesMapBean.advancedModel}" style="width:100%;height:400px">
+
+                            <p:ajax event="overlaySelect" listener="#{clientesMapBean.onMarkerSelect}" />
+
+                            <p:gmapInfoWindow id="infoWindow">
+                                <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+                                    <p:graphicImage name="/demo/images/antalya/#{clientesMapBean.marker.data}" height="150" />
+                                    <br />
+                                    <h:outputText value="#{clientesMapBean.marker.title}" />
+
+                                </p:outputPanel>
+                            </p:gmapInfoWindow>
+                        </p:gmap>
+
+                        <!-- Preload for demo -->
+                        <p:outputPanel style="display:none">
+                            <p:graphicImage name="/demo/images/antalya/konyaalti.png" />
+                            <p:graphicImage name="/demo/images/antalya/ataturkparki.png" />
+                            <p:graphicImage name="/demo/images/antalya/kaleici.png" />
+                            <p:graphicImage name="/demo/images/antalya/karaalioglu.png" />
+                        </p:outputPanel>
+                    </h:form>
+
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

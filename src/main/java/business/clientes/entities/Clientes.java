@@ -6,15 +6,20 @@
 package business.clientes.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Clientes.findByLogoUrl", query = "SELECT c FROM Clientes c WHERE c.logoUrl = :logoUrl"),
     @NamedQuery(name = "Clientes.findByContacto", query = "SELECT c FROM Clientes c WHERE c.contacto = :contacto"),
     @NamedQuery(name = "Clientes.findByLatitud", query = "SELECT c FROM Clientes c WHERE c.latitud = :latitud"),
-    @NamedQuery(name = "Clientes.findByLongitud", query = "SELECT c FROM Clientes c WHERE c.longitud = :longitud")})
+    @NamedQuery(name = "Clientes.findByLongitud", query = "SELECT c FROM Clientes c WHERE c.longitud = :longitud"),
+    @NamedQuery(name = "Clientes.findByFechaInicio", query = "SELECT c FROM Clientes c WHERE c.fechaInicio = :fechaInicio")})
 public class Clientes implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +55,13 @@ public class Clientes implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "razon_social")
     private String razonSocial;
-    @Basic(optional = false)
-    @Size(min = 1, max = 100)
+    
+    @Column(name = "estado_contractual")
+    private Boolean estadoContractual;
+    @Size(max = 100)
     @Column(name = "telefono")
     private String telefono;
-    @Basic(optional = false)
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "direccion")
     private String direccion;
     @Size(max = 1000)
@@ -63,10 +70,17 @@ public class Clientes implements Serializable {
     @Size(max = 400)
     @Column(name = "contacto")
     private String contacto;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "latitud")
-    private double latitud;
+    private Double latitud;
     @Column(name = "longitud")
-    private double longitud;
+    private Double longitud;
+    @Column(name = "fecha_inicio")
+    @Temporal(TemporalType.DATE)
+    private Date fechaInicio;
+    @JoinColumn(name = "categoria_id", referencedColumnName = "categoria_id")
+    @ManyToOne
+    private Categorias categoriaId;
 
     public Clientes() {
     }
@@ -75,11 +89,9 @@ public class Clientes implements Serializable {
         this.clienteId = clienteId;
     }
 
-    public Clientes(Integer clienteId, String razonSocial, String telefono, String direccion) {
+    public Clientes(Integer clienteId, String razonSocial) {
         this.clienteId = clienteId;
         this.razonSocial = razonSocial;
-        this.telefono = telefono;
-        this.direccion = direccion;
     }
 
     public Integer getClienteId() {
@@ -130,23 +142,48 @@ public class Clientes implements Serializable {
         this.contacto = contacto;
     }
 
-    public double getLatitud() {
+    public Double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
 
-    public double getLongitud() {
+    public Double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitud(Double longitud) {
         this.longitud = longitud;
     }
 
-  
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Categorias getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(Categorias categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
+    public Boolean getEstadoContractual() {
+        return estadoContractual;
+    }
+
+    public void setEstadoContractual(Boolean estadoContractual) {
+        this.estadoContractual = estadoContractual;
+    }
+
+   
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -169,7 +206,7 @@ public class Clientes implements Serializable {
 
     @Override
     public String toString() {
-        return "business.usuarios.entities.Clientes[ clienteId=" + clienteId + " ]";
+        return "business.clientes.entities.Clientes[ clienteId=" + clienteId + " ]";
     }
     
 }

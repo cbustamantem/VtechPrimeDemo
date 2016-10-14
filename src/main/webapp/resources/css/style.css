@@ -175,9 +175,10 @@ clip-path:ellipse(radius-x, radius-y at x, y)
     clip-path: polygon(5% 5%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%);
 }
 .clip-circle {
-    -webkit-clip-path: circle(60px at center);
-    clip-path: circle(60px at center);
+    -webkit-clip-path: circle(50px at center);
+    clip-path: circle(50px at center);
 }
+
 .clip-ellipse {
     -webkit-clip-path: ellipse(60px 40px at center);
     clip-path: ellipse(60px 40px at center);
@@ -214,4 +215,15 @@ clip-path:ellipse(radius-x, radius-y at x, y)
 .loginTitle
 {
     width:300px;padding-left:10px;font-family: 'lobster'; font-weight: lighter;
+}
+
+.ui-datepicker {
+    font-size: 70% !important;    
+}
+
+.ui-inputswitch {
+    font-size: 60% !important;    
+}
+.ui-custom-font span{
+    font-size: 60% !important;    
 }

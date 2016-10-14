@@ -126,7 +126,7 @@ public class MapaClientesBean {
                 geoModel.addOverlay(ubcacion);
             }
             centerGeoMap = latlng.getLat() + "," + latlng.getLng();
-            RequestContext.getCurrentInstance().update("cliente-form:dtCliente");
+            RequestContext.getCurrentInstance().update("form-add:clienteGr");
 
         } catch (Exception ex) {
             logger.error("OnPointSelect ", ex);
@@ -157,4 +157,5 @@ public class MapaClientesBean {
     public void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
 }

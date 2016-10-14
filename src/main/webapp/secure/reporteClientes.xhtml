@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:body>
+        <ui:composition template="/template/base.xhtml">
+            <ui:define name="content" >
+                <div style="background:#ffffff;padding: 20px;">
+                    
+                <h:outputLabel value="Reporte de Clientes " class="elegantFonts"></h:outputLabel>
+                
+                <p:timeline id="timeline" value="#{clientesTimeLineBean.model}" height="250px" 
+                            selectable="#{clientesTimeLineBean.selectable}" 
+                            zoomable="#{clientesTimeLineBean.zoomable}" 
+                            moveable="#{clientesTimeLineBean.moveable}" 
+                            stackEvents="#{clientesTimeLineBean.stackEvents}" 
+                            axisOnTop="#{clientesTimeLineBean.axisOnTop}"              
+                            eventStyle="#{clientesTimeLineBean.eventStyle}" 
+                            showCurrentTime="#{clientesTimeLineBean.showCurrentTime}" 
+                            showNavigation="#{clientesTimeLineBean.showNavigation}"> 
+
+                    <p:ajax event="select" listener="#{clientesTimeLineBean.onSelect}"/>  
+
+                </p:timeline>
+                
+                <p:chart type="bar" model="#{clientesChartBean.barModel}" style="height:300px; width:50%;"/>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

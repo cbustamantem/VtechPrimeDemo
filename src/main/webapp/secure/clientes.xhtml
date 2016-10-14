@@ -23,28 +23,54 @@
 
                 <h:form id="cliente-form">
                     <p:growl id="growl" showDetail="true" sticky="true" />
-
+                    <!-- Grilla de datos principal -->
                     <p:dataTable id="dtCliente" var="cliente" value="#{clientesBean.listaClientes}"
                                  rows="10" paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15"
                                  selection="#{clientesBean.cliente}" rowKey="#{cliente}"
-                                 selectionMode="single">
+                                 selectionMode="single"
+                                 sortMode="multiple"
+                                 widgetVar="clientesTbl"
+                                 >
+                        <!--draggableRows="true"-->
 
                         <p:ajax event="rowSelect" listener="#{clientesBean.onRowSelect}" />
-
-                        <p:column headerText="ID" sortBy="#{cliente.clienteId}">
+                        <!--<p:ajax event="rowReorder" update="cliente-form:dtCliente" />-->
+                        <p:column headerText="ID" sortBy="#{cliente.clienteId}" >
                             <h:outputText value="#{cliente.clienteId}" />
                         </p:column>
-                        <p:column headerText="Razon Social" sortBy="#{cliente.razonSocial}">
-                            <h:outputText value="#{cliente.razonSocial}" />
-                        </p:column>                        
+                        <p:column headerText="Logo" >
+                            <h:graphicImage url="#{cliente.logoUrl}" style="width:90px;" class="clip-circle"/>
+                        </p:column>  
+                        <p:column headerText="Razon Social" sortBy="#{cliente.razonSocial}" filterBy="#{cliente.razonSocial}">
+                            <h:outputText value="#{cliente.razonSocial}"  />
+                        </p:column>              
+                        <p:column headerText="Telefono" >
+                            <h:outputText value="#{cliente.telefono}" />
+                        </p:column>              
+                        <p:column headerText="Est. Contractual" filterBy="#{cliente.estadoContractual}" >
+                            <f:facet name="filter">
+                                <p:selectOneButton class="ui-custom-font" onchange="PF('clientesTbl').filter()" >
+                                    <f:converter converterId="javax.faces.Boolean" />
+                                    <f:selectItem  itemLabel="Todos" itemValue="" />
+                                    <f:selectItem itemLabel="Activo" itemValue="true" />
+                                    <f:selectItem itemLabel="Inactivo" itemValue="false" />
+                                </p:selectOneButton>
+                            </f:facet>
+                            <p:inputSwitch value="#{cliente.estadoContractual}" onLabel="Activo" offLabel="Inactivo" />
+                        </p:column>              
+                        <p:column headerText="Cliente desde" >
+                            <h:outputText value="#{cliente.fechaInicio}" >
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>     
                         <f:facet name="footer">
-                            <p:commandButton process="dtCliente" icon="ui-icon-document" update=":form-add:clienteGr" 
-                                             value="Agregar" oncomplete="PF('dlgCliAdd').show()" actionListener="#{clientesBean.actionClean}"/>
-                            <p:commandButton process="dtCliente" icon="ui-icon-pencil"
+                            <p:commandButton process="dtCliente" icon="ui-icon-document" update=":form-registro:clienteGr" 
+                                             value="Agregar" oncomplete="PF('dlgCliAdd').show()" actionListener="#{clientesBean.actionClean}" />
+                            <p:commandButton process="dtCliente"  icon="ui-icon-pencil"
                                              value="Editar" oncomplete="PF('dlgCliAdd').show()"
-                                             update=":form-add:clienteGr" 
+                                             update=":form-registro:clienteGr" 
                                              disabled="#{clientesBean.bloquearBotones}"/>
 
                             <p:confirmDialog global="true" showEffect="fade"
@@ -58,10 +84,12 @@
                         </f:facet>
                     </p:dataTable>
                 </h:form>
+
+
                 <!-- Dialogo de registro de clientes -->
                 <p:dialog header="Registro de Clientes" class="elegantFonts" id="dlgCliAdd" widgetVar="dlgCliAdd"
                           modal="true" showEffect="fade" hideEffect="fade"  resizable="false">
-                    <h:form id="form-add">
+                    <h:form id="form-registro">
                         <p:messages id="messages" showDetail="true" autoUpdate="true" />
                         <p:panelGrid columns="2" columnClasses="column" id="clienteGr"> 
                             <p:outputLabel value="Razon Social" for="tbRazonSocial" />
@@ -71,8 +99,7 @@
                                 <h:inputHidden value="#{clientesBean.cliente.clienteId}" />
                             </h:panelGroup>
                             <p:outputLabel value="Teléfono" for="tbTelefono" />
-                            <p:inputText id="tbTelefono" required="true"
-                                         value="#{clientesBean.cliente.telefono}" />
+                            <p:inputMask id="tbTelefono" required="true" value="#{clientesBean.cliente.telefono}" mask="(999) 999-999"/>
                             <p:outputLabel value="Contacto" for="tbContacto" />
                             <p:inputText id="tbContacto" required="true"
                                          value="#{clientesBean.cliente.contacto}" />
@@ -87,17 +114,23 @@
                                 <p:outputLabel value="Longitud: #{clientesBean.cliente.longitud}"/>
                                 <p:commandButton 
                                     value=" Ubicar" 
-                                    update="clienteGr,:cliente-form:dtCliente" 
+                                    update="cliente-form:dtCliente" 
                                     onclick="PF('dlgclientMap').show()"
                                     icon="fa fa-map-marker"
                                     />
 
                             </h:panelGroup>
+                            <p:outputLabel for="btnFecha" value="Fecha  desde:" />
+                            <p:calendar id="btnFecha" value="#{clientesBean.cliente.fechaInicio}"  style="font-size:80% !important;" showOn="button" />
 
+                            <h:outputText value="Estado Contractual: " />
+                            <p:selectBooleanButton id="estContractual" value="#{clientesBean.cliente.estadoContractual}" onLabel="Activo" offLabel="Inactivo" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:100px">
+                                <!--<p:ajax update="msgs" listener="#{selectBooleanView.addMessage}" />-->
+                            </p:selectBooleanButton>
 
                             <p:commandButton 
                                 value="Guardar" 
-                                update="clienteGr,:cliente-form:dtCliente" 
+                                update="cliente-form:dtCliente" 
                                 action="#{clientesBean.registrarCliente}"
                                 />
 
@@ -108,15 +141,22 @@
                 <!-- Dialogo selector de ubicación de clientes -->
                 <p:dialog header="Ubicacion de clientes" class="elegantFonts" widgetVar="dlgclientMap"
                           modal="true" showEffect="fade" hideEffect="fade"  resizable="true" style=" width:560px;height:285vh; " closable="true">
+                    <h:form id="form-mapa">
+                        <p:gmap id="geoGmap" widgetVar="geoMa\p"  center="#{mapaClientesBean.centerGeoMap}" 
+                                zoom="#{mapaClientesBean.zoom}" model="#{mapaClientesBean.geoModel}"  
+                                type="ROADMAP" style=" width:560px !important;height:60vh" >
+                            <p:ajax event="geocode" listener="#{mapaClientesBean.onGeocode}" update="@this" />
+                            <p:ajax event="stateChange" listener="#{mapaClientesBean.onStateChange}" update="" />
+                            <p:ajax event="pointSelect" listener="#{mapaClientesBean.onPointSelect}" update="@this" />
 
-                    <p:gmap id="geoGmap" widgetVar="geoMa\p"  center="#{mapaClientesBean.centerGeoMap}" 
-                            zoom="#{mapaClientesBean.zoom}" model="#{mapaClientesBean.geoModel}"  
-                            type="ROADMAP" style=" width:560px !important;height:60vh" >
-                        <p:ajax event="geocode" listener="#{mapaClientesBean.onGeocode}" update="@this" />
-                        <p:ajax event="stateChange" listener="#{mapaClientesBean.onStateChange}" update="" />
-                        <p:ajax event="pointSelect" listener="#{mapaClientesBean.onPointSelect}" update="@this" />
-
-                    </p:gmap>
+                        </p:gmap>
+                        <p:commandButton 
+                            value=" Seleccionar Ubicación" 
+                            update="form-registro:clienteGr" 
+                            onclick="PF('dlgclientMap').hide()"
+                            icon="fa fa-map-marker"
+                            />
+                    </h:form>
                 </p:dialog>
             </ui:define>
 
